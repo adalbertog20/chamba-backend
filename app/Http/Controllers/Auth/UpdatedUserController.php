@@ -35,4 +35,21 @@ class UpdatedUserController extends Controller
             'user' => $user
         ]);
     }
+    public function updatePassword(Request $request)
+    {
+        $user = $request->user();
+
+        $validatedData = $request->validate([
+            'password' => ['required', 'string', 'min:8', 'confirmed']
+        ]);
+
+        $user->update([
+            'password' => Hash::make($validatedData['password'])
+        ]);
+
+        return response()->json([
+            'message' => 'Password Updated Successfully',
+            'user' => $user
+        ]);
+    }
 }
