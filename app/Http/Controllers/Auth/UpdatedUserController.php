@@ -52,4 +52,20 @@ class UpdatedUserController extends Controller
             'user' => $user
         ]);
     }
+
+    public function updateJobs(Request $request)
+    {
+        $user = $request->user();
+
+        $request->validate([
+            'jobs_ids' => ['required', 'array', 'min:1'],
+            'jobs_ids.*' => ['required', 'integer', 'exists:jobs,id']
+        ]);
+
+        $user->jobs()->sync($request->jobs_ids);
+
+        return response()->json([
+            'message' => 'Jobs Updated Successfully',
+        ]);
+    }
 }
