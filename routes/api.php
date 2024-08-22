@@ -4,17 +4,8 @@ use App\Http\Controllers\Auth\UpdatedUserController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChambaController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
@@ -27,3 +18,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/update-jobs', [UpdatedUserController::class, 'updateJobs']);
     Route::get('/show-jobs', [UserController::class, 'showJobs']);
 });
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/chamba', [ChambaController::class, 'store'])->name('chamba.store');
+    Route::get('/chamba/{id}', [ChambaController::class, 'show'])->name('chamba.show');
+    Route::delete('/chamba/{id}', [ChambaController::class, 'destroy'])->name('chamba.destroy');
+    Route::put('/chamba/{id}', [ChambaController::class, 'update'])->name('chamba.update');
+});
+
+Route::get('/chamba', [ChambaController::class, 'index'])->name('chamba.index');
