@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\UpdatedUserController;
 use App\Http\Controllers\RequestsChambasController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\RedirectClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChambaController;
@@ -21,13 +22,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::post('/chamba', [ChambaController::class, 'store'])->name('chamba.store');
+    Route::post('/chamba', [ChambaController::class, 'store'])->middleware(RedirectClient::class)->name('chamba.store');
     Route::get('/chamba/{id}', [ChambaController::class, 'show'])->name('chamba.show');
-    Route::delete('/chamba/{id}', [ChambaController::class, 'destroy'])->name('chamba.destroy');
-    Route::put('/chamba/{id}', [ChambaController::class, 'update'])->name('chamba.update');
+    Route::delete('/chamba/{id}', [ChambaController::class, 'destroy'])->middleware(RedirectClient::class)->name('chamba.destroy');
+    Route::put('/chamba/{id}', [ChambaController::class, 'update'])->middleware(RedirectClient::class)->name('chamba.update');
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum', 'prohibit.client'])->group(function () {
     Route::get('/requests', [RequestsChambasController::class, 'getAllRequests'])->name('requests.index');
     Route::post('/requests', [RequestsChambasController::class, 'store'])->name('requests.store');
     Route::put('/requests-status/{id}', [RequestsChambasController::class, 'updateStatus'])->name('status.update');
