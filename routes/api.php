@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\UpdatedUserController;
+use App\Http\Controllers\RequestsChambasController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/chamba/{id}', [ChambaController::class, 'show'])->name('chamba.show');
     Route::delete('/chamba/{id}', [ChambaController::class, 'destroy'])->name('chamba.destroy');
     Route::put('/chamba/{id}', [ChambaController::class, 'update'])->name('chamba.update');
+});
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/requests', [RequestsChambasController::class, 'getAllRequests'])->name('requests.index');
+    Route::post('/requests', [RequestsChambasController::class, 'store'])->name('requests.store');
+    Route::put('/requests-status/{id}', [RequestsChambasController::class, 'updateStatus'])->name('status.update');
 });
 
 Route::get('/chamba', [ChambaController::class, 'index'])->name('chamba.index');
