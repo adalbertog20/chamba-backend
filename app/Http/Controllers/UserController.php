@@ -16,4 +16,14 @@ class UserController extends Controller
             'jobs' => $jobs
         ]);
     }
+    public function updateRole(Request $request)
+    {
+        $user = $request->user();
+        $user->role = 1;
+        $user->save();
+        return response()->json([
+            'message' => 'Role updated',
+            'user' => $user
+        ]);
+    }
 }
