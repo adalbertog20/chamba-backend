@@ -10,6 +10,10 @@ class ChambaController extends Controller
 {
     public function index(Request $request)
     {
+        $chambas = Chamba::all();
+        return response()->json([
+            "chambas" => $chambas
+        ]);
     }
     public function show($id)
     {

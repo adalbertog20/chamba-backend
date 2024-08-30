@@ -27,12 +27,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/chamba/{id}', [ChambaController::class, 'show'])->name('chamba.show');
     Route::delete('/chamba/{id}', [ChambaController::class, 'destroy'])->middleware(RedirectClient::class)->name('chamba.destroy');
     Route::put('/chamba/{id}', [ChambaController::class, 'update'])->middleware(RedirectClient::class)->name('chamba.update');
+    Route::get('/chambas', [ChambaController::class, 'index'])->name('chamba.index');
 });
 
-Route::middleware(['auth:sanctum', 'prohibit.client'])->group(function () {
+Route::middleware(['auth:sanctum', 'can:isAdmin'])->group(function () {
     Route::get('/requests', [RequestsChambasController::class, 'getAllRequests'])->name('requests.index');
     Route::post('/requests', [RequestsChambasController::class, 'store'])->name('requests.store');
     Route::put('/requests-status/{id}', [RequestsChambasController::class, 'updateStatus'])->name('status.update');
 });
-
-Route::get('/chamba', [ChambaController::class, 'index'])->name('chamba.index');
