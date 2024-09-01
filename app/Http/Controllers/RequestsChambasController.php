@@ -52,7 +52,7 @@ class RequestsChambasController extends Controller
         $requestChamba = RequestChamba::find($id);
 
         $validatedData = $request->validate([
-            'status' => ['required', 'string', Rule::in([StatusType::Pending, StatusType::Accepted, StatusType::Rejected, StatusType::Ended])]
+            'status' => ['required', 'string', 'in:accepted,rejected']
         ]);
 
         $requestChamba->update([

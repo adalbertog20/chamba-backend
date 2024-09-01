@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->foreignId('worker_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('chamba_id')->constrained()->onDelete('cascade');
             $table->text('message');
-            $table->enum('status', [StatusType::Pending, StatusType::Accepted, StatusType::Rejected, StatusType::Ended])->default(StatusType::Pending);
+            $table->enum('status', ['pending', 'accepted', 'rejected', 'ended'])->default('pending');
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();
